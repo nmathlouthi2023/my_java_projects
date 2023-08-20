@@ -2,6 +2,11 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="mvn-repository" />
+      <option name="name" value="Maven Repository" />
+      <option name="url" value="https://mvnrepository.com/artifact/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss-maven2-release-repository" />
       <option name="name" value="Jboss Public Maven Repository Group" />
       <option name="url" value="http://repository.jboss.org/nexus/content/groups/public" />
