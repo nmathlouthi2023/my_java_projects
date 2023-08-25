@@ -26,6 +26,7 @@
             <name>Maven Apache Repository</name>
             <url>https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin</url>
         </repository>
+
     </repositories>
 
     <dependencies>
