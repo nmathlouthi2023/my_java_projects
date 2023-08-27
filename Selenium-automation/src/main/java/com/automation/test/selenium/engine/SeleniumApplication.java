@@ -16,8 +16,7 @@ public class SeleniumApplication {
 	public static final String FIREFOX_DRIVER = "webdriver.firefox.driver";
 	public static final String PORT = "8082";
 	
-	public static void main( String[] args )
-    {
+	public static void main( String[] args ) {
         SpringApplication app = new SpringApplication(SeleniumApplication.class);
         app.setDefaultProperties(Collections.singletonMap("server.port", PORT));
         app.run(args);
