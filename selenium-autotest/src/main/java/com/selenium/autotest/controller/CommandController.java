@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/api/selenium/automation-test")
+@RequestMapping(value = "/api/selenium/automation-test/commands")
 public class CommandController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CommandController.class);
@@ -26,7 +26,7 @@ public class CommandController {
         this.commandService = commandService;
     }
 	
-	@RequestMapping(value = "/commands", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> create(@RequestBody Command command) {
         try {
         	logger.info(command.getName());
@@ -41,7 +41,7 @@ public class CommandController {
         }
     }
 
-    @RequestMapping(value = "/commands", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<Map<String, Object>>> getAllCommands() {
         try {
         	List<Map<String, Object>> result = commandService.findAll();
@@ -52,7 +52,7 @@ public class CommandController {
         }
     }
     
-    @RequestMapping(value = "/commands/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Command> getCommandById(@PathVariable("id") Long id) {
         try {
             Command command = commandService.findById(id);
@@ -67,7 +67,7 @@ public class CommandController {
         }
     }
 	
-	@RequestMapping(value = "/commands/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@PathVariable("id") Long id, @RequestBody Command command) {
         try {
             commandService.update(id, command);
@@ -78,7 +78,7 @@ public class CommandController {
         }
     }
     
-    @RequestMapping(value = "/commands/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         try {
             commandService.remove(id);
