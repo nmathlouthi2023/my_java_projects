@@ -12,10 +12,10 @@ import com.selenium.autotest.dao.CommandDao;
 
 @Service
 @Transactional
-public class CommandService {
+public class CommandService implements ICommandService {
 
 	@Autowired
-    private CommandDao carDao;
+    private CommandDao commandDao;
 
     public CommandService() {
     	
@@ -25,19 +25,19 @@ public class CommandService {
         if (id <= 0) {
             throw new IllegalArgumentException("ID cannot be 0 or < 0");
         }
-        return carDao.findById(id);
+        return commandDao.findById(id);
     }
 
     public void remove(Long id) {
         if (id <= 0) {
             throw new IllegalArgumentException("ID cannot be 0 or < 0 or this id do not exist");
         }
-        carDao.remove(id);
+        commandDao.remove(id);
     }
 
     public List<Map<String, Object>> findAll() {
 
-        List<Map<String, Object>> result = carDao.findAll();
+        List<Map<String, Object>> result = commandDao.findAll();
         if (result.size() > 0) {
             return result;
         } else {
@@ -45,18 +45,23 @@ public class CommandService {
         }
     }
 
-    public void add(Command command) {
+    @Override
+    public List<Command> findCommands() {
+        return commandDao.findCommands();
+    }
+
+    public Command add(Command command) {
         if (command == null) {
             throw new IllegalArgumentException("The passed object cannot be null.");
         }
-        carDao.add(command);
+        return commandDao.add(command);
     }
 
-    public void update(Long id, Command command) {
+    public Command update(Long id, Command command) {
         if (id <= 0 && command == null) {
             throw new IllegalArgumentException("The passed object cannot be null.");
         }
-        carDao.update(id, command);
+        return commandDao.update(id, command);
     }
 
 }

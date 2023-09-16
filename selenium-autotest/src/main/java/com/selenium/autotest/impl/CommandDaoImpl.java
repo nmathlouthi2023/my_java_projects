@@ -30,7 +30,7 @@ public class CommandDaoImpl implements CommandDao {
     public Command findById(Long id) {
     	
     	try {
-            return commandRepository.findById(id);
+            return commandRepository.findById(id).get();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -49,21 +49,23 @@ public class CommandDaoImpl implements CommandDao {
     }
 
     @Override
-    public void add(Command command) {
+    public Command add(Command command) {
     	try {
-    		commandRepository.save(command);
+    		return commandRepository.save(command);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-		}
+			return null;
+		}		
     }
 
     @Override
-    public void update(Long id, Command command) {
+    public Command update(Long id, Command command) {
     	try {
     		command.setId(id);
-    		commandRepository.save(command);
+    		return commandRepository.save(command);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			return command;
 		}
     }
 
@@ -72,7 +74,7 @@ public class CommandDaoImpl implements CommandDao {
     	try {
     		List<Map<String, Object>> list = new ArrayList<>();
         	Map<String, Object> map = new HashMap<>();
-        	List<Command> result = commandRepository.findAll();
+        	List<Command> result = findCommands(); //commandRepository.findAll();
             for (Command command : result) {
             	map = new HashMap<>();
             	map.put(command.getId().toString(), command);
@@ -84,5 +86,15 @@ public class CommandDaoImpl implements CommandDao {
 		}
     	return null;
     }
+
+	@Override
+	public List<Command> findCommands() {
+		//return commandRepository.findAllByOrderByOrderAsc();
+		List<Command> result = commandRepository.findAll();
+		result.sort((c1, c2) -> c1.getOrder() > c2.getOrder() ? 1 : -1);
+		result.stream().forEach(c -> System.out.println("id = " + c.getId() +", order = "+ c.getOrder() +", name = " +c.getName()));
+		return result;
+				
+	}
 
 }
