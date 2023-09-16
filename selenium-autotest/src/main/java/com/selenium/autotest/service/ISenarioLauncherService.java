@@ -9,4 +9,7 @@ import java.util.List;
 
 public interface ISenarioLauncherService {
     public void launchCommands(List<Command> commands);
+    public String getBrowser();
+    public void setBrowser(String browser);
+    public void initBrowser();
 }

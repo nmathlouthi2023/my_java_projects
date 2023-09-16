@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.selenium.autotest.entities.Command;
 import com.selenium.autotest.service.ICommandService;
 import com.selenium.autotest.service.ISenarioLauncherService;
+import com.selenium.autotest.util.ApplicationUtils;
 
 
 @RestController
@@ -97,9 +98,24 @@ public class CommandController {
         }
     }
 
-    @RequestMapping(value = "/launch", method = RequestMethod.GET)
-    public Long launch() {
+    @RequestMapping(value = "/launch/chrome", method = RequestMethod.GET)
+    public Long launchChromeBrowser() {
     	try {
+    		senarioLauncherService.initBrowser();
+    		senarioLauncherService.setBrowser(ApplicationUtils.CHROME_BROWSER_KEY);
+    		senarioLauncherService.launchCommands(commandService.findCommands());
+    		return 1l;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw (e);
+		}
+        
+    }
+    @RequestMapping(value = "/launch/firefox", method = RequestMethod.GET)
+    public Long launchFireFoxBrowser() {
+    	try {
+    		senarioLauncherService.initBrowser();
+    		senarioLauncherService.setBrowser(ApplicationUtils.FIREFOX_BROWSER_KEY);
     		senarioLauncherService.launchCommands(commandService.findCommands());
     		return 1l;
 		} catch (Exception e) {

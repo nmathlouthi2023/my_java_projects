@@ -67,9 +67,22 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-firefox-driver</artifactId>
-<!-- 			<version>4.11.0</version> -->
+			<version>4.1.4</version>		<!-- <version>4.11.0</version> -->
+		</dependency>
+		
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
 			<version>4.1.4</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server -->
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-server</artifactId>
+		    <version>3.141.59</version>
+		</dependency>
+
 		
 		<!--
 		<dependency>
@@ -96,7 +109,6 @@
 			<artifactId>selenium-server</artifactId>
 			<version>3.9.1</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>

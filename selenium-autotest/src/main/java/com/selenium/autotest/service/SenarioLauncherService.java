@@ -4,48 +4,69 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.*;
+import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.selenium.autotest.entities.Command;
+import com.selenium.autotest.util.ApplicationUtils;
 
 @Service
 public class SenarioLauncherService implements ISenarioLauncherService {
     @SuppressWarnings("unused")
 	private static final Logger LOG = LoggerFactory.getLogger(SenarioLauncherService.class);
 
-    private WebDriver firefoxDriver = null;
+    private WebDriver driver = null;
+    private String browser = null;
 
     public SenarioLauncherService() {
 
     }
 
-    private WebDriver getFirefoxDriver() {
-        if (firefoxDriver == null) {
-            firefoxDriver = new FirefoxDriver();
+    public String getBrowser() {
+    	return this.browser;
+    }
+    
+    public void setBrowser(String browser) {
+    	this.browser = browser;
+    }
+    
+    public void initBrowser() {
+    	driver = null;
+    }
+    
+    private WebDriver getDriver() {
+        if (driver == null) {
+        	if (browser != null && browser.equals(ApplicationUtils.CHROME_BROWSER_KEY)) {
+        		ChromeOptions ops = new ChromeOptions();
+            	ops.addArguments("--remote-allow-origins=*");
+            	driver = new ChromeDriver(ops);
+        	} else {
+        		driver = new FirefoxDriver();
+        	}
         }
-        return firefoxDriver;
+        return driver;
     }
 
     private void open(String url) {
-        this.getFirefoxDriver().get(url);
+        this.getDriver().get(url);
     }
 
     private void navigateTo(String url) {
-        this.getFirefoxDriver().navigate().to(url);
+        this.getDriver().navigate().to(url);
     }
 
     private void typeText(String selector, String text) {
-        new Actions(this.getFirefoxDriver())
-                .sendKeys(this.getFirefoxDriver().findElement(By.cssSelector(selector)), text)
+        new Actions(this.getDriver())
+                .sendKeys(this.getDriver().findElement(By.cssSelector(selector)), text)
                 .perform();
     }
 
     private void clickAt(String selector) {
-        this.getFirefoxDriver()
+        this.getDriver()
                 .findElement(By.cssSelector(selector))
                 .click();
     }
